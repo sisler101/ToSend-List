@@ -4,16 +4,19 @@ document.querySelector('.create-todo').addEventListener('click', function(){
 
 document.querySelector('.new-item button').addEventListener('click', function(){
     var itemName = document.querySelector('.new-item input').value;
-    if (itemName != '') {
+    if(itemName != ''){
+  
         var itemsStorage = localStorage.getItem('todo-items');
-        var itemsArr = [];
-        itemsArr = JSON.parse(itemsStorage);
+    
+        if(itemsStorage == null){
+          itemsStorage = '[]';
+        }
+
+        var itemsArr = JSON.parse(itemsStorage);
         itemsArr.push({"item":itemName, "status":0});
         saveItems(itemsArr);
         fetchItems();
-        document.querySelector('.new-item input').value='';
-        document.querySelector('.new-item').style.display='none';
-    }
+      }
 });
 
 function fetchItems() {
@@ -30,8 +33,9 @@ function fetchItems() {
                 status = 'class="done"';
             }
             newItemHTML += `<li data-itemindex="${i}" ${status}>
-            <div><span class="itemComplete">+</span><span class="item">${itemsArr[i].item}</span></div>
-            <span class="itemDelete">X</span></li>`;
+            <span class="item">${itemsArr[i].item}</span>
+            <div><span class="itemComplete">✅</span><span class="itemDelete">🗑</span></div>
+            </li>`;
         }
 
         itemsList.innerHTML = newItemHTML;
@@ -40,11 +44,11 @@ function fetchItems() {
         for (var i = 0; i < itemsListUL.length; i++) {
 
             itemsListUL[i].querySelector('.itemComplete').addEventListener('click', function() {
-                var index = this.parentNode.dataset.itemIndex;
+                var index = this.parentNode.parentNode.parentNode.dataset.itemIndex;
                 itemComplete(index);
             });
             itemsListUL[i].querySelector('.itemDelete').addEventListener('click', function() {
-                var index = this.parentNode.parentNode.parentNode.dataset.itemIndex;
+                var index = this.parentNode.parentNode.dataset.itemIndex;
                 itemDelete(index);
             });
         }
