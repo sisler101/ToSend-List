@@ -25,6 +25,9 @@ function fetchItems() {
     var newItemHTML = '';
     try{
         var itemsStorage = localStorage.getItem('todo-items');
+        if (itemsStorage == null) {
+            itemsStorage = '[]';
+        }
         var itemsArr = JSON.parse(itemsStorage);
 
         for (var i = 0; i < itemsArr.length; i++) {
@@ -33,9 +36,8 @@ function fetchItems() {
                 status = 'class="done"';
             }
             newItemHTML += `<li data-itemindex="${i}" ${status}>
-            <span class="item">${itemsArr[i].item}</span>
-            <div><span class="itemComplete">✅</span><span class="itemDelete">🗑</span></div>
-            </li>`;
+            <div><span class="itemComplete">+</span><span class="item">${itemsArr[i].item}</span></div>
+            <span class="itemDelete">X</span></li>`;
         }
 
         itemsList.innerHTML = newItemHTML;
@@ -48,7 +50,7 @@ function fetchItems() {
                 itemComplete(index);
             });
             itemsListUL[i].querySelector('.itemDelete').addEventListener('click', function() {
-                var index = this.parentNode.parentNode.dataset.itemIndex;
+                var index = this.parentNode.dataset.itemIndex;
                 itemDelete(index);
             });
         }
