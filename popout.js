@@ -16,6 +16,8 @@ document.querySelector('.new-item button').addEventListener('click', function(){
         itemsArr.push({"item":itemName, "status":0});
         saveItems(itemsArr);
         fetchItems();
+        document.querySelector('.new-item input').value='';
+        document.querySelector('.new-item').style.display='none';
       }
 });
 
