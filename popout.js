@@ -48,11 +48,11 @@ function fetchItems() {
         for (var i = 0; i < itemsListUL.length; i++) {
 
             itemsListUL[i].querySelector('.itemComplete').addEventListener('click', function() {
-                var index = this.parentNode.parentNode.parentNode.dataset.itemIndex;
+                var index = this.parentNode.parentNode.dataset.itemindex;
                 itemComplete(index);
             });
             itemsListUL[i].querySelector('.itemDelete').addEventListener('click', function() {
-                var index = this.parentNode.dataset.itemIndex;
+                var index = this.parentNode.dataset.itemindex;
                 itemDelete(index);
             });
         }
