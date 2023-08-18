@@ -56,9 +56,20 @@ function fetchItems() {
             };
 
 
-            newItemHTML += `<li data-itemindex="${i}" ${status} style="background-color: ${gradeColors[itemsArr[i].difficulty]}">
-            <div class="itemComplete" style="display:flex;"><span class="difficulty" style="margin-right:5px; margin-left:5px;">${itemsArr[i].difficulty}</span><span class="item">${itemsArr[i].item}</span></div>
-            <span class="itemDelete" style="background-color:white; border-radius:8px; padding-right:4px; padding-left:4px; padding-top:1px; padding-bottom:1px">X</span></li>`;
+            newItemHTML += 
+            `<li data-itemindex="${i}" ${status} style="background-color: ${gradeColors[itemsArr[i].difficulty]}">
+                <div class="itemComplete" style="display:flex;">
+                    <span class="difficulty" style="margin-right:5px; margin-left:5px;">
+                        ${itemsArr[i].difficulty}
+                    </span>
+                    <span class="item" style="background-color:rgba(255, 255, 255, 0.5); box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.6); border-radius:6px; padding-top:1px; padding-bottom:1px; padding-right:4px; padding-left:4px; vertical-align: middle; text-align:center;">
+                        ${itemsArr[i].item}
+                    </span>
+                </div>
+                <span class="itemDelete" style="background-color:white; border-radius:8px; padding-right:4px; padding-left:4px; padding-top:1px; padding-bottom:1px">
+                    X
+                </span>
+            </li>`;
         }
 
         
