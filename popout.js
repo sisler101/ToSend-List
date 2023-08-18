@@ -1,28 +1,15 @@
 document.querySelector('.create-todo').addEventListener('click', function(){
     document.querySelector('.new-item').style.display='block';
+    document.querySelector('.body').addEventListener("keypress", function (event) {
+        console.log(event);
+        if (event.key == "Enter") {
+            addItem();
+        }
+    });
 });
 
-document.querySelector('.new-item button').addEventListener('click', function(){
-    var itemName = document.querySelector('.new-item input').value;
-    var itemDifficulty = document.querySelector('.new-item select').value;
-    if(itemName != ''){
-  
-        var itemsStorage = localStorage.getItem('todo-items');
-    
-        if(itemsStorage == null){
-          itemsStorage = '[]';
-        }
-
-        var itemsArr = JSON.parse(itemsStorage);
-
-
-        itemsArr.push({"item":itemName, "status":0, "difficulty":itemDifficulty});
-        saveItems(itemsArr);
-        fetchItems();
-        document.querySelector('.new-item input').value='';
-        document.querySelector('.new-item select').value='V1';
-        document.querySelector('.new-item').style.display='none';
-      }
+document.querySelector('.save-button').addEventListener('click', function(){
+    addItem();
 });
 
 function fetchItems() {
@@ -125,6 +112,29 @@ function itemDelete(index) {
 
     fetchItems();
 
+}
+
+function addItem() {
+    var itemName = document.querySelector('.new-item input').value;
+    var itemDifficulty = document.querySelector('.new-item select').value;
+    if(itemName != ''){
+  
+        var itemsStorage = localStorage.getItem('todo-items');
+    
+        if(itemsStorage == null){
+          itemsStorage = '[]';
+        }
+
+        var itemsArr = JSON.parse(itemsStorage);
+
+
+        itemsArr.push({"item":itemName, "status":0, "difficulty":itemDifficulty});
+        saveItems(itemsArr);
+        fetchItems();
+        document.querySelector('.new-item input').value='';
+        document.querySelector('.new-item select').value='V1';
+        document.querySelector('.new-item').style.display='none';
+    }
 }
 
 function saveItems(obj) {
