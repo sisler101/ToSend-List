@@ -1,3 +1,52 @@
+const vToF = {
+    'V1': '5',
+    'V2': '5+',
+    'V3': '6a',
+    'V4': '6b',
+    'V5': '6c',
+    'V6': '7a',
+    'V7': '7b',
+    'V8': '7c'
+};
+
+var vScale = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8'];
+var fontScale = ['5', '5+', '6a', '6b', '6c', '7a', '7b', '7c'];
+
+const fToV = {
+    '5': 'V1',
+    '5+': 'V2',
+    '6a': 'V3',
+    '6b': 'V4',
+    '6c': 'V5',
+    '7a': 'V6',
+    '7b': 'V7',
+    '7c': 'V8'
+};
+
+var selector = document.querySelector('.grade');
+document.querySelector('.scale').addEventListener('click', function(){
+    if (document.querySelector('.scale').textContent == "V") {
+        document.querySelector('.scale').textContent = "Font";
+        console.log(selector);
+        for (var i = 0; i < 8; i++) {
+            console.log(selector.options[i]);
+            selector.options[i].text = vToF[selector.options[i].value];
+            selector.options[i].value = selector.options[i].text;
+        }
+        fetchItems(1);
+
+    } else {
+        document.querySelector('.scale').textContent = "V";
+
+        for (var i = 0; i < 8; i++) {
+            console.log(selector.options[i]);
+            selector.options[i].text = fToV[selector.options[i].value];
+            selector.options[i].value = selector.options[i].text
+        }
+        fetchItems(0);
+    }
+});
+
 document.querySelector('.create-todo').addEventListener('click', function(){
     document.querySelector('.new-item').style.display='block';
     document.querySelector('.body').addEventListener("keypress", function (event) {
@@ -12,7 +61,7 @@ document.querySelector('.save-button').addEventListener('click', function(){
     addItem();
 });
 
-function fetchItems() {
+function fetchItems(scale) {
     const itemsList = document.querySelector('ul.todo-items');
     itemsList.innerHTML = '';
     var newItemHTML = '';
@@ -116,7 +165,7 @@ function itemDelete(index) {
 
 function addItem() {
     var itemName = document.querySelector('.new-item input').value;
-    var itemDifficulty = document.querySelector('.new-item select').value;
+    var itemDifficulty = document.querySelector('.grade').value;
     if(itemName != ''){
   
         var itemsStorage = localStorage.getItem('todo-items');
@@ -132,7 +181,7 @@ function addItem() {
         saveItems(itemsArr);
         fetchItems();
         document.querySelector('.new-item input').value='';
-        document.querySelector('.new-item select').value='V1';
+        document.querySelector('.new-item grade').value='1';
         document.querySelector('.new-item').style.display='none';
     }
 }
