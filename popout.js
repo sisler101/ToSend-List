@@ -181,7 +181,12 @@ function addItem() {
         saveItems(itemsArr);
         fetchItems();
         document.querySelector('.new-item input').value='';
-        document.querySelector('.new-item grade').value='1';
+        if (vScale.includes(document.querySelector('.grade').value)) {
+            document.querySelector('.grade').value = 'V1';
+        } else {
+            document.querySelector('.grade').value='5';
+        }
+        
         document.querySelector('.new-item').style.display='none';
     }
 }
