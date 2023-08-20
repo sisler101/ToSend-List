@@ -1,3 +1,5 @@
+var open = false;
+
 const vToF = {
     'V1': '5',
     'V2': '5+',
@@ -27,9 +29,7 @@ var selector = document.querySelector('.grade');
 document.querySelector('.scale').addEventListener('click', function(){
     if (document.querySelector('.scale').textContent == "V") {
         document.querySelector('.scale').textContent = "Font";
-        console.log(selector);
         for (var i = 0; i < 8; i++) {
-            console.log(selector.options[i]);
             selector.options[i].text = vToF[selector.options[i].value];
             selector.options[i].value = selector.options[i].text;
         }
@@ -39,7 +39,6 @@ document.querySelector('.scale').addEventListener('click', function(){
         document.querySelector('.scale').textContent = "V";
 
         for (var i = 0; i < 8; i++) {
-            console.log(selector.options[i]);
             selector.options[i].text = fToV[selector.options[i].value];
             selector.options[i].value = selector.options[i].text
         }
@@ -48,9 +47,14 @@ document.querySelector('.scale').addEventListener('click', function(){
 });
 
 document.querySelector('.create-todo').addEventListener('click', function(){
-    document.querySelector('.new-item').style.display='block';
+    if (open) {
+        document.querySelector('.new-item').style.display='none';
+    } else {
+        document.querySelector('.new-item').style.display='block';
+    }
+    open = !open;
+    
     document.querySelector('.body').addEventListener("keypress", function (event) {
-        console.log(event);
         if (event.key == "Enter") {
             addItem();
         }
@@ -188,6 +192,7 @@ function addItem() {
         }
         
         document.querySelector('.new-item').style.display='none';
+        open = false;
     }
 }
 
