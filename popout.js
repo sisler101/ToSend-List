@@ -27,23 +27,7 @@ const fToV = {
 
 var selector = document.querySelector('.grade');
 document.querySelector('.scale').addEventListener('click', function(){
-    if (document.querySelector('.scale').textContent == "V") {
-        document.querySelector('.scale').textContent = "Font";
-        for (var i = 0; i < 8; i++) {
-            selector.options[i].text = vToF[selector.options[i].value];
-            selector.options[i].value = selector.options[i].text;
-        }
-        fetchItems(1);
-
-    } else {
-        document.querySelector('.scale').textContent = "V";
-
-        for (var i = 0; i < 8; i++) {
-            selector.options[i].text = fToV[selector.options[i].value];
-            selector.options[i].value = selector.options[i].text
-        }
-        fetchItems(0);
-    }
+    changeScale();
 });
 
 document.querySelector('.create-todo').addEventListener('click', function(){
@@ -65,11 +49,14 @@ document.querySelector('.save-button').addEventListener('click', function(){
     addItem();
 });
 
-function fetchItems(scale) {
+function fetchItems() {
+    console.log("in fetchItems");
+
     const itemsList = document.querySelector('ul.todo-items');
     itemsList.innerHTML = '';
     var newItemHTML = '';
     try{
+        console.log("in the try");
         var itemsStorage = localStorage.getItem('todo-items');
         if (itemsStorage == null) {
             itemsStorage = '[]';
@@ -127,6 +114,18 @@ function fetchItems(scale) {
                 itemDelete(index);
             });
         }
+
+        // Retrieve the scale from storage
+        var scale = localStorage.getItem('scale');
+        if (scale == null || scale == '') {
+            scale = 'V';
+        }
+        console.log("scale:");
+        console.log(scale);
+
+        document.querySelector('.scale').textContent = scale;
+        update(scale);
+        
     } catch(e) {
     }
 }
@@ -199,6 +198,45 @@ function addItem() {
 function saveItems(obj) {
     var string = JSON.stringify(obj);
     localStorage.setItem('todo-items', string);
+}
+
+function saveScale(scale) {
+    localStorage.setItem('scale', scale);
+}
+
+function changeScale() {
+    var scale = document.querySelector('.scale').textContent;
+    if (scale == 'V') {
+        document.querySelector('.scale').textContent = "Font";
+        for (var i = 0; i < 8; i++) {
+            selector.options[i].text = vToF[selector.options[i].value];
+            selector.options[i].value = selector.options[i].text;
+        }
+
+    } else {
+        document.querySelector('.scale').textContent = "V";
+
+        for (var i = 0; i < 8; i++) {
+            selector.options[i].text = fToV[selector.options[i].value];
+            selector.options[i].value = selector.options[i].text
+        }
+    }
+    saveScale(document.querySelector('.scale').textContent);
+}
+
+function update(scale) {
+    if (scale == 'V') {
+        for (var i = 0; i < 8; i++) {
+            selector.options[i].text = vScale[i];
+            selector.options[i].value = vScale[i];
+        }
+    } else {
+        for (var i = 0; i < 8; i++) {
+            selector.options[i].text = fontScale[i];
+            selector.options[i].value = fontScale[i];
+        }
+    }
+    saveScale(scale);
 }
 
 fetchItems();
